@@ -1,5 +1,7 @@
 --!strict
 --@author: v_eiyn/ve1yn/veiyn
+--@version: 1.0.5
+
 
 local EasyMath = {}
 
