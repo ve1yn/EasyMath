@@ -94,23 +94,58 @@ local controller = EasyMath.Pathfinding:Start(
 Require the library from `ReplicatedStorage`:
 
 ```lua
+
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local player = Players.LocalPlayer
+local cam = workspace.CurrentCamera
+
 local EasyMath = require(ReplicatedStorage:WaitForChild("EasyMath"):WaitForChild("EasyMath"))
-local part = workspace.Part
+local Tween = EasyMath.Tween
 
-EasyMath.Tween:Hover(
-    part,
-    part.Position + Vector3.new(0, 1, 0),
-    part.Position + Vector3.new(0, 3, 0),
-    -1,
-    1
-)
+local tweenPart = workspace:WaitForChild("TweenPart")
 
-EasyMath.Tween:Rotate(part, -1, 0.1)
+player.Chatted:Connect(function(message)
+	message = message:lower()
+	if message == "/start tween" then
+		local part = tweenPart
+		local startPos = part.Position + Vector3.new(0, 1, 0)
+		local endPos = part.Position + Vector3.new(0, 3, 0)
 
-task.delay(4, function()
-   EasyMath.Tween:FadeOut(part, 2)
+		Tween:Hover(part, startPos, endPos, -1, 1)
+		Tween:Rotate(part, -1, 4)
+		task.delay(1, function()
+			Tween:CameraShake(cam, {
+				magnitude = 3,
+				roughness = 2,
+				rotation = 8,
+				fadeIn = 0.2,
+				fadeOut = 0.5,
+				duration = 4
+			})
+		end)
+		task.delay(2, function()
+			Tween:Move(part, Vector3.new(5, 0, 0), 1)
+			Tween:Scale(part, 1.5, 1)
+		end)
+
+		task.delay(3.5, function()
+			Tween:FadeOutTree(part, 2)
+		end)
+		task.delay(6, function()
+			Tween:FadeIn(part, 2)
+		end)
+
+		task.delay(7, function()
+			Tween:Rotate(cam, -1, 0.2)
+		end)
+		task.delay(8, function()
+			Tween:Move(cam, Vector3.new(0, 0, -5), 1)
+		end)
+	end
 end)
+
 
 ```
 
