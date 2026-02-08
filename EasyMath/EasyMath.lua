@@ -1,6 +1,6 @@
 --!strict
 --@author: v_eiyn/ve1yn/veiyn
---@version: 1.0.5
+--@version: 1.0.6
 
 
 local EasyMath = {}
@@ -18,3 +18,4 @@ for _, child in ipairs(script.Parent.Modules:GetChildren()) do
 end
 
 return EasyMath
+
